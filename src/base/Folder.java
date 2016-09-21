@@ -27,13 +27,13 @@ public class Folder implements Comparable<Folder>{
 		return notes;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
+//	@Override
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + ((name == null) ? 0 : name.hashCode());
+//		return result;
+//	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -86,7 +86,7 @@ public class Folder implements Comparable<Folder>{
 
 	
 	public List<Note> searchNotes(String keywords){
-		List<Note> returnList=new ArrayList<Note>();
+		ArrayList<Note> returnList=new ArrayList<Note>();
 		ArrayList<String> keyarray=new ArrayList<String>();
 		ArrayList<String> wordarray=new ArrayList<String>();
 		for( String word : keywords.split(" ")){
