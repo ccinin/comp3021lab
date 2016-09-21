@@ -93,9 +93,7 @@ public class Folder implements Comparable<Folder>{
 			keyarray.add(word.toLowerCase());
 		}
 		
-		for (Note n : notes){
-			int status=0;// 0=neutral 1=previous pass 2=previous miss 3=pass current
-			boolean pass=true;
+		for (Note n : notes){	
 			for( String word : n.getTitle().split(" ")){
 				wordarray.add(word.toLowerCase());
 			}
@@ -105,9 +103,12 @@ public class Folder implements Comparable<Folder>{
 					wordarray.add(word.toLowerCase());
 				}
 			}
+			boolean pass=true;
 			int count=0;
+			int status=0;// 0=neutral 1=previous pass 2=previous miss 3=pass current
 			for(String key: keyarray){
 				count++;
+				
 				if(key.equals("or")){
 					if(status==1){status=3;}
 					if(status==2){status=0;}
@@ -125,6 +126,7 @@ public class Folder implements Comparable<Folder>{
 						break;
 					}
 				}
+				
 				if(count==keyarray.size()){
 					if(status==2){pass=false;}
 				}

@@ -13,14 +13,18 @@ public class NoteBook {
 	
 	public boolean insertNote(String folderName , Note note){
 		Folder f =null;
+		Folder temp = new Folder(folderName);
 		for(Folder f1 :folders){
-			if(f1.equals(new Folder(folderName))){
+			if(f1.equals(temp)){
 				f=f1;
+				break;
 			}
 		}
 		if(f==null){
 			f=new Folder(folderName);
+			f.addNote(note);
 			folders.add(f);
+			return true;
 		}
 		for (Note n : f.getNotes()){
 			if(n.equals(note)){
