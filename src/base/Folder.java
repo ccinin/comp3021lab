@@ -105,9 +105,10 @@ public class Folder implements Comparable<Folder>{
 					wordarray.add(word.toLowerCase());
 				}
 			}
-			
+			int count=0;
 			for(String key: keyarray){
-				if(key=="or"){
+				count++;
+				if(key.equals("or")){
 					if(status==1){status=3;}
 					if(status==2){status=0;}
 					continue;
@@ -117,11 +118,15 @@ public class Folder implements Comparable<Folder>{
 					if(status==3){status=0;continue;}
 				}
 				for (String word : wordarray){
-					if(key.equals(word.toLowerCase())){
+					status=2;
+					word=word.toLowerCase();
+					if(key.equals(word)){				
 						status=1;
-					}else{
-						status=2;
+						break;
 					}
+				}
+				if(count==keyarray.size()){
+					if(status==2){pass=false;}
 				}
 			}
 			if(pass){
