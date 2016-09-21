@@ -9,5 +9,14 @@ public class TextNote extends Note{
 		content="";
 	}
 	
+	public TextNote (String title, String content){
+		super(title);
+		this.content=content;
+	}
 	
+	public String getContent(){
+		return content;
+	}
+	
+
 }
