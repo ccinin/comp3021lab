@@ -86,58 +86,120 @@ public class Folder implements Comparable<Folder>,Serializable{
 	
 
 	
+//	public List<Note> searchNotes(String keywords){
+//		ArrayList<Note> returnList=new ArrayList<Note>();
+//		ArrayList<String> keyarray=new ArrayList<String>();
+//		ArrayList<String> wordarray=new ArrayList<String>();
+//		for( String word : keywords.split(" ")){
+//			keyarray.add(word.toLowerCase());
+//		}
+//		
+//		for (Note n : notes){	
+//			for( String word : n.getTitle().split(" ")){
+//				wordarray.add(word.toLowerCase());
+//			}
+//			if(n instanceof TextNote){
+//				TextNote textn=(TextNote)n;
+//				for( String word : textn.getContent().split(" ")){
+//					wordarray.add(word.toLowerCase());
+//				}
+//			}
+//			boolean pass=true;
+//			int count=0;
+//			int status=0;// 0=neutral 1=previous pass 2=previous miss 3=pass current
+//			for(String key: keyarray){
+//				count++;
+//				
+//				if(key.equals("or")){
+//					if(status==1){status=3;}
+//					if(status==2){status=0;}
+//					continue;
+//				}else{
+//					if(status==1){status=0;}
+//					if(status==2){pass=false;break;}
+//					if(status==3){status=0;continue;}
+//				}
+//				for (String word : wordarray){
+//					status=2;
+//					word=word.toLowerCase();
+//					if(key.equals(word)){				
+//						status=1;
+//						break;
+//					}
+//				}
+//				
+//				if(count==keyarray.size()){
+//					if(status==2){pass=false;}
+//				}
+//			}
+//			if(pass){
+//				returnList.add(n);
+//			}
+//		}
+//		
+//		return returnList;
+//
+//	}
 	public List<Note> searchNotes(String keywords){
-		ArrayList<Note> returnList=new ArrayList<Note>();
-		ArrayList<String> keyarray=new ArrayList<String>();
-		ArrayList<String> wordarray=new ArrayList<String>();
-		for( String word : keywords.split(" ")){
-			keyarray.add(word.toLowerCase());
-		}
-		
-		for (Note n : notes){	
-			for( String word : n.getTitle().split(" ")){
-				wordarray.add(word.toLowerCase());
-			}
-			if(n instanceof TextNote){
-				TextNote textn=(TextNote)n;
-				for( String word : textn.getContent().split(" ")){
-					wordarray.add(word.toLowerCase());
-				}
-			}
-			boolean pass=true;
-			int count=0;
-			int status=0;// 0=neutral 1=previous pass 2=previous miss 3=pass current
-			for(String key: keyarray){
-				count++;
-				
-				if(key.equals("or")){
-					if(status==1){status=3;}
-					if(status==2){status=0;}
-					continue;
-				}else{
-					if(status==1){status=0;}
-					if(status==2){pass=false;break;}
-					if(status==3){status=0;continue;}
-				}
-				for (String word : wordarray){
-					status=2;
-					word=word.toLowerCase();
-					if(key.equals(word)){				
-						status=1;
-						break;
-					}
-				}
-				
-				if(count==keyarray.size()){
-					if(status==2){pass=false;}
-				}
-			}
-			if(pass){
-				returnList.add(n);
-			}
-		}
-		
-		return returnList;
+		List<Note> totalNote = new ArrayList<>();
+		keywords = keywords.toLowerCase();
+		String[] words = keywords.split(" ");
+		boolean correct = false;
 
-	}
+			for(Note oneNote :notes){
+				String[] oneText;		
+				if (oneNote instanceof TextNote){
+					TextNote a = (TextNote) oneNote;
+					String noteContent = a.getTitle() +" "+ a.content;
+					oneText = noteContent.toLowerCase().split(" ");
+				}else{
+					oneText = oneNote.getTitle().toLowerCase().split(" ");	
+				}
+
+				
+				for(int j=0;j<words.length; j++){	
+					for (int i = 0; i< oneText.length; i++){
+						if (words[j].equals(oneText[i])){
+							correct = true;
+							break;
+						}
+					}
+					if((j+1) < words.length){
+						if(words[j+1].equals("or")){
+							if(correct == false){
+								j=j+1;
+								continue;
+								}else if((correct == true)){
+									if((j+3)< words.length){
+										if(words[j+3].equals("or")){
+											j=j+4;
+											continue;
+										}else{
+											
+										
+										j=j+2;
+										correct = false;
+										continue;
+										}
+									}else{
+										break;	
+									}
+								}
+						}
+						if(correct == true){
+							correct = false;
+							continue;
+						}
+					}
+					if(correct == false){
+						break;
+					}						
+					
+				}
+				if (correct == true){
+					totalNote.add(oneNote);
+				}
+			}
+	return totalNote;
+	}	
 }
