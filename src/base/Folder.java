@@ -201,5 +201,19 @@ public class Folder implements Comparable<Folder>,Serializable{
 				}
 			}
 	return totalNote;
+	}
+
+	public boolean removeNotes(String title) {
+		// TODO Auto-generated method stub
+
+		for(Note n:this.notes){
+			if(n.getTitle().equals(title)){
+				
+				this.notes.remove(this.notes.indexOf(n));
+				return true;
+			}     
+		}
+		
+		return false;
 	}	
 }

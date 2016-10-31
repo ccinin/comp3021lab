@@ -104,4 +104,9 @@ public class NoteBook implements Serializable{
 		}
 		return true;
 	}
+
+	public void addFolder(String input) {
+		
+		this.folders.add(new Folder(input));
+	}
 }
